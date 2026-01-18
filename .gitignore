@@ -1,0 +1,14 @@
+/Library/
+/Temp/
+/Obj/
+/Build/
+/Builds/
+/Logs/
+*.csproj
+*.sln
+.vs
+/UserSettings/
+.vsconfig
+/Assembly-CSharp.csproj/
+/Demo1_BTTHANH.sln/
+/UpgradeLog/
