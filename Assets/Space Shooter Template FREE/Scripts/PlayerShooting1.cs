@@ -5,16 +5,17 @@ public class PlayerShooting1 : MonoBehaviour
     public GameObject bulletPrefabs;
     public float shootingInterval = 0.1f;
 
-    // Tạo 2 ô để kéo 2 điểm nòng súng vào từ Inspector
-    public Transform gunPointLeft;
-    public Transform gunPointRight;
+    // Biến để chỉnh vị trí đạn bay ra từ Inspector
+    public Vector3 bulletOffset;
 
     private float lastBulletTime;
 
     void Update()
     {
+        // Kiểm tra nếu người dùng đang giữ chuột trái (nút số 0)
         if (Input.GetMouseButton(0))
         {
+            // Kiểm tra nhịp bắn tự động
             if (Time.time - lastBulletTime > shootingInterval)
             {
                 ShootBullet();
@@ -27,10 +28,8 @@ public class PlayerShooting1 : MonoBehaviour
     {
         if (bulletPrefabs != null)
         {
-            // Bắn đạn tại vị trí nòng trái
-            Instantiate(bulletPrefabs, gunPointLeft.position, gunPointLeft.rotation);
-            // Bắn đạn tại vị trí nòng phải
-            Instantiate(bulletPrefabs, gunPointRight.position, gunPointRight.rotation);
+            // Cộng thêm bulletOffset vào vị trí hiện tại của máy bay
+            Instantiate(bulletPrefabs, transform.position + bulletOffset, transform.rotation);
         }
     }
 }
