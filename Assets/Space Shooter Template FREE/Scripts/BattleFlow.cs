@@ -3,9 +3,12 @@ using UnityEngine.SceneManagement;
 
 public class BattleFlow : MonoBehaviour
 {
+    [Header("UI & Audio Settings")]
     public GameObject gameOverUI;
     public GameObject gameWinUI;
     public GameObject bgMusic;
+
+    [Header("Reference")]
     public PlayerHealth playerHealth;
 
     private void Start()

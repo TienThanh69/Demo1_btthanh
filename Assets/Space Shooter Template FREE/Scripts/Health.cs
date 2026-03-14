@@ -1,27 +1,29 @@
 ﻿using UnityEngine;
-using System; // Bắt buộc phải có dòng này để dùng Action
+using System;
 
 public class Health : MonoBehaviour
 {
-    [Header("Settings")]
     public GameObject explosionPrefab;
     public int defaultHealthPoint = 3;
 
-    // Sự kiện thông báo khi đối tượng bị tiêu diệt
     public Action onDead;
+    public Action onHealthChanged;
 
-    private int healthPoint;
+    public int healthPoint;
 
-    private void Start()
+    protected virtual void Start()
     {
         healthPoint = defaultHealthPoint;
+        if (onHealthChanged != null) onHealthChanged.Invoke();
     }
 
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
         if (healthPoint <= 0) return;
 
         healthPoint -= damage;
+
+        if (onHealthChanged != null) onHealthChanged.Invoke();
 
         if (healthPoint <= 0)
         {
@@ -31,17 +33,14 @@ public class Health : MonoBehaviour
 
     protected virtual void Die()
     {
-        // Tạo hiệu ứng nổ
         if (explosionPrefab != null)
         {
-            var explosion = Instantiate(explosionPrefab, transform.position, transform.rotation);
+            GameObject explosion = Instantiate(explosionPrefab, transform.position, transform.rotation);
             Destroy(explosion, 1f);
         }
 
-        // Xóa đối tượng khỏi màn hình
         Destroy(gameObject);
 
-        // Phát tín hiệu "đã chết" cho các hệ thống khác (như BattleFlow)
-        onDead?.Invoke();
+        if (onDead != null) onDead.Invoke();
     }
 }

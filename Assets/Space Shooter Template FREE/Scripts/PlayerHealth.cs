@@ -1,17 +1,32 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealth : Health
 {
-    // Kéo CanvasGameOver vào ô này trong Inspector
-    public GameObject gameOverCanvas;
+    [Header("UI References")]
+    public Image healthBarFill;
 
-    protected override void Die()
+    protected override void Start()
     {
-        base.Die();
-        // Hiện bảng Game Over lên
-        if (gameOverCanvas != null)
+        // Gọi Start của lớp cha để khởi tạo máu
+        base.Start();
+        UpdateHealthBar();
+    }
+
+    public override void TakeDamage(int damage)
+    {
+        // Gọi logic trừ máu của lớp cha
+        base.TakeDamage(damage);
+        // Sau đó cập nhật thanh máu trên màn hình
+        UpdateHealthBar();
+    }
+
+    void UpdateHealthBar()
+    {
+        if (healthBarFill != null)
         {
-            gameOverCanvas.SetActive(true);
+            // Tính toán tỷ lệ fillAmount (từ 0 đến 1)
+            healthBarFill.fillAmount = (float)healthPoint / defaultHealthPoint;
         }
     }
 }
