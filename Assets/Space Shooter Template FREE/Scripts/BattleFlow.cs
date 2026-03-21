@@ -3,12 +3,9 @@ using UnityEngine.SceneManagement;
 
 public class BattleFlow : MonoBehaviour
 {
-    [Header("UI & Audio Settings")]
     public GameObject gameOverUI;
     public GameObject gameWinUI;
     public GameObject bgMusic;
-
-    [Header("Reference")]
     public PlayerHealth playerHealth;
 
     private void Start()
@@ -17,17 +14,12 @@ public class BattleFlow : MonoBehaviour
         if (gameWinUI != null) gameWinUI.SetActive(false);
 
         if (playerHealth != null)
-        {
             playerHealth.onDead += OnGameOver;
-        }
     }
 
     private void Update()
     {
-        if (EnemyHealth.LivingEnemyCount <= 0)
-        {
-            OnGameWin();
-        }
+        if (EnemyHealth.LivingEnemyCount <= 0) OnGameWin();
     }
 
     private void OnGameWin()
